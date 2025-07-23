@@ -1,17 +1,23 @@
 
 def merged(l, r):
     lst = []
-    for i in range(len(l + r)):
-        if len(l) and len(r):
-            if l[0] < r[0]:
-                lst.append(l[0])
-                l.pop(0)
+    x, y = 0, 0
+    for _ in range(len(l + r)):
+        if x < len(l) and y < len(r):
+            if l[x]< r[y]:
+                lst.append(l[x])
+                x += 1
             else:
-                lst.append(r[0])
-                r.pop(0)
+                lst.append(r[y])
+                y += 1
         else:
-
-            lst += l + r
+            if x == len(l):
+                for i in range(y, len(r)):
+                    lst.append(r[i])
+            else:
+                for i in range(x, len(l)):
+                    lst.append(l[i])
+            break
     return lst
 
 def merge(total, i, j):
@@ -20,10 +26,8 @@ def merge(total, i, j):
     if j - i == 1:
         return merged(total[i], total[j])
     mid = (i+j) // 2
-    print(i, j, mid)
     l = merge(total, i, mid)
     r = merge(total, mid+1, j)
-    print(l, r)
     return merged(r, l)
 
 
@@ -39,6 +43,5 @@ total = []
 for i in range(k):
     lst = list(map(int, input().split(" ")))
     total.append(lst)
-print(total)
 prt(merge(total, 0, len(total)-1))
 
