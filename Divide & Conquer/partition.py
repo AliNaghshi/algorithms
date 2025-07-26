@@ -1,3 +1,4 @@
+# 1:10:19
 n = int(input())
 lst = list(map(int, input().split(" ")))
 def generate(lst):
