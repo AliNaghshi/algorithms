@@ -22,26 +22,19 @@ for i in range(1, n + 1):
     for j in range(1, m + 1):
         ps[i][j] = ps[i - 1][j] + ps[i][j - 1] - ps[i - 1][j - 1] + lst[i - 1][j - 1]
 maximum = 0
-# for x0 in range(n-k+1):
-#     for y0 in range(m-k+1):
-#         val = (get_sum(ps, x0, y0, x0+k-1, y0+k-1))
-#         if 13 <= val <= 15:
-#             print(x0, y0, val)
-#         maximum = max(maximum, get_sum(ps, x0, y0, x0+k-1, y0+k-1))
 for x0 in range(n - k + 1):
     for y0 in range(m - k + 1):
         for x1 in range(n - k + 1):
             for y1 in range(m - k + 1):
-                # print(x0, y0, x1, y1)
-
                 area0 = get_sum(ps, x0, y0, x0 + k, y0 + k)
                 area1 = get_sum(ps, x1, y1, x1 + k, y1 + k)
                 total = area0 + area1
-                a, b, c, d = max(x0, x1), min(x0 + k, x1 + k), max(y0, y1), min(y0 + k, y1 + k)
-                if a > b and c > d:
-                    area2 = ps[b][d] - ps[a][d] - ps[b][c] + ps[a][c]
-                    total = total - area2
-                # print(total, maximum)
+
+                a, b, c, d = max(x0, x1), max(y0, y1), min(x0 + k, x1 + k), min(y0 + k, y1 + k)
+                if c > a and d > b:
+                    area2 = get_sum(ps, a, b, c, d)
+                    total -= area2
+
                 maximum = max(maximum, total)
 
 # print(maximum)
