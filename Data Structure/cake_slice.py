@@ -1,4 +1,5 @@
-def add_to_sorted_list(arr, value):
+# 25:20:82
+def find(arr, value):
     low = 0
     high = len(arr)
 
@@ -9,31 +10,36 @@ def add_to_sorted_list(arr, value):
         else:
             high = mid
 
-    arr.insert(low, value)
-    return arr
+    return low
 
-def choose_max(H, L):
+def add(dl, lst, number):
+    i = add_to_sorted_list(lst, number)
+    new_dis1, new_dis2 = lst[i] - number, number - lst[i - 1]
+    distance = lst[i] - lst[i-1]
+    j = add_to_sorted_list(dl, distance)
+    dl.pop(j)
 
-    ph, pl = 0, 0
-    maximum = 0
-    for i in H:
-        for j in L:
-            area = (i - ph) * (j - pl)
-            if maximum < area:
-                maximum = area
-                r0, r1 = i, j
-            pl = j
-        ph = i
-    print(maximum)
-    return r0, r1
+    j = add_to_sorted_list(dl, new_dis1)
+    dl.insert(j, new_dis1)
+    j = add_to_sorted_list(dl, new_dis2)
+    dl.insert(j, new_dis2)
 
-T, n, m = map(int, input().split(" "))
-H, L = [0, n], [0, m]
+    lst.insert(i, number)
+    return dl[-1]
+
+
+
+
+
+
+n, m, T = map(int, input().split(" "))
+H, V = [0, m], [0, n]
+dh, dv = [m], [n]
+mh, mv = m, n
 for i in range(T):
     inp = input().split(" ")
-    if "H" in inp:
-        add_to_sorted_list(H, int(inp[1]))
+    if inp[0] == "H":
+        mh = (add(dh, H, int(inp[1])))
     else:
-        add_to_sorted_list(L, int(inp[1]))
-
-    choose_max(H, L)
+        mv = (add(dv, V, int(inp[1])))
+    print(mh * mv)
